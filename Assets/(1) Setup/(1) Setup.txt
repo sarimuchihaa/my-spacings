@@ -1,0 +1,6 @@
+(1)
+(Setup)
+(Frontend)
+npm create vite@latest my-spacings -- --template react
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
