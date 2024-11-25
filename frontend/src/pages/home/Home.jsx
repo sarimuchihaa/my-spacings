@@ -28,23 +28,19 @@ const Home = () => {
   };
 
   const handleDelete = async (id) => {
+    try {
     if (window.confirm('Are you sure you want to delete this product?')) {
-      setIsLoading(true);  // Set loading state to true while the request is being made
-  
-      const result = await deleteProduct(id);  // Call the deleteProduct function
-  
+      setIsLoading(true);  
+      const result = await deleteProduct(id);  
       if (result.success) {
-        // Optionally, you can show a success message or perform other actions here
-        alert(result.message);  // Display success message
-  
-        // Refresh the page to fetch the updated products list
-        window.location.reload();  // This will reload the page
-      } else {
-        // Optionally, show an error message if the deletion failed
-        alert(result.message);  // Display error message
+        fetchProducts(); 
       }
-  
-      setIsLoading(false);  // Set loading state back to false after the request completes
+      alert(result.message);  
+    }
+   } catch (error) {
+      console.error('Error updating product:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
