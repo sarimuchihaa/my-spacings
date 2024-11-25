@@ -18,15 +18,13 @@ const Home = () => {
   const [showPopup, setShowPopup] = useState(false); 
   const [selectedProduct, setSelectedProduct] = useState(null); 
 
-  // Fetch products on component mount.
   useEffect(() => {
     fetchProducts();
   }, [fetchProducts]);
 
   const handleEdit = (product) => {
-    console.log('Editing Product:', product); // Log to confirm product includes `_id`
-    setSelectedProduct(product); // Set the selected product.
-    setShowPopup(true);          // Show the popup.
+    setSelectedProduct(product); 
+    setShowPopup(true);         
   };
 
   const handleDelete = async (id) => {
@@ -35,7 +33,7 @@ const Home = () => {
       try {
         const result = await deleteProduct(id);
         if (result.success) {
-          fetchProducts(); // Refresh product list after deletion.
+          fetchProducts(); 
         }
         alert(result.message);
       } catch (error) {
@@ -47,13 +45,13 @@ const Home = () => {
   };
 
   const handleSaveUpdatedProduct = async (updatedProduct) => {
-    console.log('Updated Product:', updatedProduct); // Log the entire object
-    console.log('Updated Product ID:', updatedProduct._id); // Log the _id
+    console.log('Updated Product:', updatedProduct); 
+    console.log('Updated Product ID:', updatedProduct._id); 
     setIsLoading(true);
     try {
-      const result = await updateProduct(updatedProduct._id, updatedProduct); // Ensure _id is used here
+      const result = await updateProduct(updatedProduct._id, updatedProduct); 
       if (result.success) {
-        fetchProducts(); // Refresh the product list
+        fetchProducts(); 
       }
       alert(result.message);
     } catch (error) {
@@ -64,7 +62,7 @@ const Home = () => {
   };
   return (
     <div>
-      <LogoutButton className="w-40 h-40" />
+      
       <div className="min-h-screen bg-gray-50 p-4 md:p-6">
         <header className="mb-8 flex items-center justify-between">
           <h1 className="text-3xl font-bold text-cyan-500">Spacing Store 🛒✈️</h1>
@@ -74,6 +72,7 @@ const Home = () => {
                 <PlusCircle className="h-10 w-10 text-gray-600" />
               </button>
             </Link>
+          <LogoutButton className="w-40 h-40" />
           </div>
         </header>
 
@@ -123,8 +122,8 @@ const Home = () => {
       {showPopup && selectedProduct && (
         <Popup
           product={selectedProduct}
-          onClose={() => setShowPopup(false)} // Close popup.
-          onSave={handleSaveUpdatedProduct}   // Passsave function to handle updating product.
+          onClose={() => setShowPopup(false)} 
+          onSave={handleSaveUpdatedProduct}   
         />
       )}
     </div>
