@@ -11,9 +11,9 @@ const __dirname = path.resolve();
 
 
 // Route for root url ("/").
-app.get("/", (req, res) => {
-    res.send("Hello Sarim 😇");
-})
+// app.get("/", (req, res) => {
+//     res.send("Hello Sarim 😇");
+// })
 
 if (process.env.NODE_ENV === "production") 
 {
