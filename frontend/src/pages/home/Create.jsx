@@ -8,51 +8,47 @@ export default function Create() {
     image: '',
     address: '',
   });
-
+  
+  const [file, setFile] = useState(null);
   const navigate = useNavigate();
 
   const handleFileUpload = (e) => {
-    const file = e.target.files[0];    // Get selected file.
-    if (file) {
-      const reader = new FileReader(); // Create FileReader to read file.
-      reader.onloadend = () => {
-        // Set file base64 URL in productData.
-        setProductData({ ...productData, image: reader.result });
-      };
-      reader.readAsDataURL(file); // String
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      setFile(selectedFile); // Store file for upload
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Handle form submission.
-    console.log('Product data:', productData);
+    // Create FormData object to send form data
+    const formData = new FormData();
+    formData.append("name", productData.name);
+    formData.append("price", productData.price);
+    formData.append("address", productData.address);
+    if (file) {
+      formData.append("image", file); // Append file to FormData
+    }
 
-    // Send a POST request to the API
     try {
-      const response = await fetch('/api/products/create', {
+      const response = await fetch("/api/products/create", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(productData),
+        body: formData, // Send FormData object
       });
 
       if (response.ok) {
         const result = await response.json();
         console.log("Product added:", result);
-        
-        // Optionally reset form or show success message
+
+        // Reset form fields and navigate
         setProductData({
           name: '',
           price: '',
-          image: '',
           address: '',
         });
-
-        // Redirect to the homepage ("/")
-        navigate("/");  // Use navigate to redirect
+        setFile(null);
+        navigate("/");
       } else {
         console.error("Failed to add product:", response.statusText);
       }
@@ -60,6 +56,7 @@ export default function Create() {
       console.error("Error sending request:", error);
     }
   };
+
 
 
 
@@ -112,13 +109,9 @@ export default function Create() {
                 className="w-full p-3 bg-slate-800 border border-slate-700 rounded-md text-white placeholder-gray-400"
                 onChange={(e) => handleFileUpload(e)}
               />
-              {productData.image && (
-                  <img
-                    src={productData.image}
-                    alt="Preview"
-                    className="mt-4 w-full h-auto rounded-md"
-                  />
-                  )}
+              {file && (
+                <p className="text-gray-400 mt-2">Selected File: {file.name}</p>
+              )}
               <button type="submit" className="w-full p-3 bg-[#3BB5E5] hover:bg-[#3BB5E5]/90 text-white rounded-md">
                 Add Spacing
               </button>
