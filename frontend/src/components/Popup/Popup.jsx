@@ -2,18 +2,56 @@ import React, { useState } from 'react';
 
 export default function Popup({ product, onClose, onSave }) {
   const [updatedProduct, setUpdatedProduct] = useState({
-    _id: product._id, // Include the product ID
+    _id: product._id,
     name: product.name,
     price: product.price,
     image: product.image,
     address: product.address,
   });
 
+  const [imageFile, setImageFile] = useState(null); 
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0]; 
+    if (file) {
+      setImageFile(file);
+      setUpdatedProduct({ ...updatedProduct, image: URL.createObjectURL(file) });
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSave(updatedProduct); // Pass the updated product with `_id`
+
+    // If file is selected, you need to upload file first.
+    if (imageFile) {
+      const formData = new FormData();
+      formData.append('image', imageFile);
+      formData.append('productId', updatedProduct._id);
+
+      // You can handle file upload to your server here.
+      fetch('/api/products/upload', {
+        method: 'POST',
+        body: formData,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success) {
+            updatedProduct.image = data.imageUrl;
+            onSave(updatedProduct);
+          } else {
+            alert('Error uploading image');
+          }
+        })
+        .catch((err) => {
+          console.error('Error uploading image:', err);
+          alert('Error uploading image');
+        });
+    } else {
+      onSave(updatedProduct);
+    }
     onClose();
   };
+
 
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
@@ -42,11 +80,10 @@ export default function Popup({ product, onClose, onSave }) {
             onChange={(e) => setUpdatedProduct({ ...updatedProduct, price: e.target.value })}
           />
           <input
-            type="text"
-            placeholder="Image URL"
+            type="file"
+            accept="image/*"
             className="w-full p-3 border border-gray-300 rounded-md"
-            value={updatedProduct.image}
-            onChange={(e) => setUpdatedProduct({ ...updatedProduct, image: e.target.value })}
+            onChange={handleFileChange}
           />
           <div className="flex justify-between">
             <button type="button" onClick={onClose} className="bg-gray-400 text-white px-4 py-2 rounded-md">
