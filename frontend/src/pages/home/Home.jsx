@@ -28,16 +28,19 @@ const Home = () => {
   };
 
   const handleDelete = async (id) => {
+    try {
     if (window.confirm('Are you sure you want to delete this product?')) {
       setIsLoading(true);  
       const result = await deleteProduct(id);  
       if (result.success) {
-        alert(result.message);  
         fetchProducts(); 
-      } else {
-        alert(result.message);  
       }
-      setIsLoading(false);  
+      alert(result.message);  
+    }
+   } catch (error) {
+      console.error('Error updating product:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
