@@ -30,17 +30,25 @@ const Home = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this product?')) {
       setIsLoading(true);
+      
+      // Optimistically remove the product from the UI
+      const updatedProducts = products.filter((product) => product._id !== id);
+      setProducts(updatedProducts); // Update the state immediately
+  
       try {
         const result = await deleteProduct(id);
         if (result.success) {
-          // Fetch the updated list of products
-          await fetchProducts(); // Make sure the fetch operation is awaited
+          // Fetch the updated list of products after deletion
+          await fetchProducts();
           alert(result.message);
         } else {
+          // If delete failed, re-add the product to the state (rollback)
+          setProducts(products); // Revert to the old state if delete failed
           alert("Failed to delete the product");
         }
       } catch (error) {
         console.error('Error deleting product:', error);
+        setProducts(products); // Revert to the old state if there's an error
       } finally {
         setIsLoading(false);
       }
