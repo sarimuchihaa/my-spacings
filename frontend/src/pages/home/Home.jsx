@@ -31,12 +31,11 @@ const Home = () => {
     if (window.confirm('Are you sure you want to delete this product?')) {
       setIsLoading(true);
       try {
-        const result = await deleteProduct(id); 
+        const result = await deleteProduct(id);
         if (result.success) {
-          alert(result.message); 
-        } else {
-          alert("Failed to delete the product");
+          fetchProducts(); 
         }
+        alert(result.message);
       } catch (error) {
         console.error('Error deleting product:', error);
       } finally {
