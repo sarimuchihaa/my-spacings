@@ -33,10 +33,12 @@ const Home = () => {
       try {
         const result = await deleteProduct(id);
         if (result.success) {
-          const updatedProducts = products.filter((product) => product._id !== id);
-          updateProduct(updatedProducts);
+          // Fetch the updated list of products
+          await fetchProducts(); // Make sure the fetch operation is awaited
+          alert(result.message);
+        } else {
+          alert("Failed to delete the product");
         }
-        alert(result.message);
       } catch (error) {
         console.error('Error deleting product:', error);
       } finally {
