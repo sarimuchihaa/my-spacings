@@ -31,11 +31,9 @@ const Home = () => {
     if (window.confirm('Are you sure you want to delete this product?')) {
       setIsLoading(true);
       try {
-        const result = await deleteProduct(id);
+        const result = await deleteProduct(id); 
         if (result.success) {
-          const updatedProducts = products.filter((product) => product._id !== id);
-          setProducts(updatedProducts);
-          alert(result.message);
+          alert(result.message); 
         } else {
           alert("Failed to delete the product");
         }
