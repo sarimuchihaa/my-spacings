@@ -95,15 +95,17 @@ const Home = () => {
                 <div className="p-4">
                   <div className="flex items-center justify-between">
                     <h3 className="font-bold text-2xl text-blue-500">{product.name}</h3>
-                    <h3 className="font-bold text-xl text-amber-800">{product.address}</h3>
                     <p className="text-lg font-bold text-green-500">${product.price}</p>
+                  </div>
+                  <div>
+                  <h3 className="font-bold text-xl text-amber-800">{product.address}</h3>
                   </div>
                 </div>
                 <div className="p-4 pt-0">
                   <div className="flex w-full gap-2">
                     <button
                       className="flex-1 py-2 px-4 text-white bg-blue-500 hover:bg-blue-600 rounded-md flex items-center justify-center gap-2"
-                      onClick={() => handleEdit(product)} // Edit button
+                      onClick={() => handleEdit(product)}
                     >
                       <Edit2 className="h-6 w-6 text-green-500" /> <span>Edit</span>
                     </button>
