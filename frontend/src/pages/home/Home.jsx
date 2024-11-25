@@ -72,7 +72,9 @@ const Home = () => {
                 <PlusCircle className="h-10 w-10 text-gray-600" />
               </button>
             </Link>
+            <div>
           <LogoutButton className="w-40 h-40" />
+          </div>
           </div>
         </header>
 
