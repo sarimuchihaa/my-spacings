@@ -33,7 +33,8 @@ const Home = () => {
       try {
         const result = await deleteProduct(id);
         if (result.success) {
-          fetchProducts(); 
+          const updatedProducts = products.filter((product) => product._id !== id);
+          updateProduct(updatedProducts);
         }
         alert(result.message);
       } catch (error) {
