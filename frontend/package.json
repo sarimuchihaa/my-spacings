@@ -25,6 +25,7 @@
     "react-router-dom": "^6.24.0",
     "react-toastify": "^10.0.6",
     "socket.io-client": "^4.7.5",
+    "spacing": "file:..",
     "zustand": "^4.5.5"
   },
   "devDependencies": {
