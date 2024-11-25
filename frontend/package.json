@@ -10,9 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@chakra-ui/react": "^3.2.0",
+    "@emotion/react": "^11.13.5",
+    "@emotion/styled": "^11.13.5",
     "chatapp": "file:..",
     "emoji-mart": "^5.6.0",
     "emoji-picker-react": "^4.11.1",
+    "framer-motion": "^11.11.17",
+    "lucide-react": "^0.460.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hot-toast": "^2.4.1",
@@ -20,7 +25,7 @@
     "react-router-dom": "^6.24.0",
     "react-toastify": "^10.0.6",
     "socket.io-client": "^4.7.5",
-    "zustand": "^4.5.4"
+    "zustand": "^4.5.5"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
