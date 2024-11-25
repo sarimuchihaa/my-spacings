@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Create() {
   const [productData, setProductData] = useState({
@@ -8,6 +8,8 @@ export default function Create() {
     image: '',
     address: '',
   });
+
+  const navigate = useNavigate();
 
   const handleFileUpload = (e) => {
     const file = e.target.files[0];    // Get selected file.
@@ -40,6 +42,7 @@ export default function Create() {
       if (response.ok) {
         const result = await response.json();
         console.log("Product added:", result);
+        
         // Optionally reset form or show success message
         setProductData({
           name: '',
@@ -47,6 +50,9 @@ export default function Create() {
           image: '',
           address: '',
         });
+
+        // Redirect to the homepage ("/")
+        navigate("/");  // Use navigate to redirect
       } else {
         console.error("Failed to add product:", response.statusText);
       }
@@ -54,6 +60,8 @@ export default function Create() {
       console.error("Error sending request:", error);
     }
   };
+
+
 
   return (
     <div className="min-h-screen bg-white text-white">
