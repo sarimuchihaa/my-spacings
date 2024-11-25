@@ -4,10 +4,7 @@ import { Product } from "../models/product.models.js";
 export const createProduct = async (req, res) => {
     try {
       // Destructure data from request body.
-      const { name, price, address } = req.body;
-
-      // Get image file from request.
-      const image = req.file ? `/uploads/${req.file.filename}` : null; // Image path saved in DB.
+      const { name, price, image, address } = req.body;
   
       // Create new product.
       const newProduct = new Product({
