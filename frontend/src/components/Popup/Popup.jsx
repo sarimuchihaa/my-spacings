@@ -11,44 +11,26 @@ export default function Popup({ product, onClose, onSave }) {
 
   const [imageFile, setImageFile] = useState(null); 
 
+
   const handleFileChange = (e) => {
     const file = e.target.files[0]; 
     if (file) {
       setImageFile(file);
-      setUpdatedProduct({ ...updatedProduct, image: URL.createObjectURL(file) });
+
+      // Convert image to base64
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64Image = reader.result;
+        setUpdatedProduct({ ...updatedProduct, image: base64Image });
+      };
+      reader.readAsDataURL(file); 
     }
   };
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // If file is selected, you need to upload file first.
-    if (imageFile) {
-      const formData = new FormData();
-      formData.append('image', imageFile);
-      formData.append('productId', updatedProduct._id);
-
-      // You can handle file upload to your server here.
-      fetch('/api/products/upload', {
-        method: 'POST',
-        body: formData,
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.success) {
-            updatedProduct.image = data.imageUrl;
-            onSave(updatedProduct);
-          } else {
-            alert('Error uploading image');
-          }
-        })
-        .catch((err) => {
-          console.error('Error uploading image:', err);
-          alert('Error uploading image');
-        });
-    } else {
-      onSave(updatedProduct);
-    }
+    onSave(updatedProduct);
     onClose();
   };
 
@@ -79,12 +61,20 @@ export default function Popup({ product, onClose, onSave }) {
             value={updatedProduct.price}
             onChange={(e) => setUpdatedProduct({ ...updatedProduct, price: e.target.value })}
           />
-          <input
+{/* Image file input */}
+<input
             type="file"
             accept="image/*"
             className="w-full p-3 border border-gray-300 rounded-md"
             onChange={handleFileChange}
           />
+
+          {/* Display the selected image preview */}
+          {updatedProduct.image && (
+            <div className="mt-4">
+              <img src={updatedProduct.image} alt="Product Preview" className="w-32 h-32 object-cover" />
+            </div>
+          )}
           <div className="flex justify-between">
             <button type="button" onClick={onClose} className="bg-gray-400 text-white px-4 py-2 rounded-md">
               Cancel
