@@ -9,6 +9,18 @@ export default function Create() {
     address: '',
   });
 
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];    // Get selected file.
+    if (file) {
+      const reader = new FileReader(); // Create FileReader to read file.
+      reader.onloadend = () => {
+        // Set file base64 URL in productData.
+        setProductData({ ...productData, image: reader.result });
+      };
+      reader.readAsDataURL(file); // String
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -86,17 +98,20 @@ export default function Create() {
                 value={productData.price}
                 onChange={(e) => setProductData({ ...productData, price: e.target.value })}
               />
-              <input
-                type="text"
-                placeholder="Image URL"
+               <input
+                type="file"
+                accept="image/*"
                 className="w-full p-3 bg-slate-800 border border-slate-700 rounded-md text-white placeholder-gray-400"
-                value={productData.imageUrl}
-                onChange={(e) => setProductData({ ...productData, image: e.target.value })}
+                onChange={(e) => handleFileUpload(e)}
               />
-              <button 
-                type="submit" 
-                className="w-full p-3 bg-[#3BB5E5] hover:bg-[#3BB5E5]/90 text-white rounded-md"
-              >
+              {productData.image && (
+                  <img
+                    src={productData.image}
+                    alt="Preview"
+                    className="mt-4 w-full h-auto rounded-md"
+                  />
+                  )}
+              <button type="submit" className="w-full p-3 bg-[#3BB5E5] hover:bg-[#3BB5E5]/90 text-white rounded-md">
                 Add Spacing
               </button>
             </form>
