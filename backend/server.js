@@ -36,12 +36,12 @@ app.use("/api/products", productRouter);
 // PRODUCTION
 // PRODUCTION
 if (process.env.NODE_ENV === "production") {
-    const __dirname = path.dirname(new URL(import.meta.url).pathname);  // Calculate __dirname in ES modules
-    const frontendPath = path.join(__dirname, "../frontend/dist");  // Adjust relative path to frontend build
+    const __dirname = path.dirname(new URL(import.meta.url).pathname);  
+    const frontendPath = path.join(__dirname, "../frontend/dist");
 
-    app.use(express.static(frontendPath));  // Serve static files from the build directory
+    app.use(express.static(frontendPath));  
     app.get("*", (req, res) => {
-        res.sendFile(path.resolve(frontendPath, "index.html"));  // Serve index.html for any route
+        res.sendFile(path.resolve(frontendPath, "index.html"));  
     });
 }
 
