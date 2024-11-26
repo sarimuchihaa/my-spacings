@@ -1,20 +1,39 @@
-// IMPORTING
+// IMPORTS
 import express from "express";
 import dotenv from "dotenv";
 import dbConnection from "./db/dbConnection.js";
-import { app } from "./app.js";
 import path from 'path';
+import cors from "cors";
+import cookieParser from "cookie-parser";
+import bodyParser from 'body-parser';
+import userRouter from './routes/user.routes.js';
+import productRouter from './routes/product.routes.js';
+
+
+// CONFIGS
 dotenv.config();
 const PORT = process.env.PORT || 5000;
-const __dirname = path.resolve();
+const app = express();
 
 
+// MIDDLEWARES
+app.use(cors({
+    origin: "*",
+    credentials: true
+}));
+app.use(cookieParser());
+app.use(express.json());
+app.use(bodyParser.json());
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
-// Route for root url ("/").
-// app.get("/", (req, res) => {
-//     res.send("Hello Sarim 😇");
-// })
 
+// ROUTES
+app.use("/api/users", userRouter);
+app.use("/api/products", productRouter);
+
+
+// PRODUCTION
 if (process.env.NODE_ENV === "production") 
 {
     app.use(express.static(path.join(__dirname, "/frontend/dist")));
