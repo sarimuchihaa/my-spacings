@@ -36,7 +36,7 @@ app.use("/api/products", productRouter);
 // PRODUCTION
 if (process.env.NODE_ENV === "production") 
 {
-    app.use(express.static(path.join(__dirname, "/frontend/dist")));
+    const __dirname = path.dirname(new URL(import.meta.url).pathname);
     app.get("*", (req, res) => {
         res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
     });

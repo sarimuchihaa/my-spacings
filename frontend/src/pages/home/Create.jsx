@@ -26,10 +26,6 @@ export default function Create() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Handle form submission.
-    console.log('Product data:', productData);
-
-    // Send a POST request to the API
     try {
       const response = await fetch('/api/products/create', {
         method: "POST",
@@ -42,17 +38,14 @@ export default function Create() {
       if (response.ok) {
         const result = await response.json();
         console.log("Product added:", result);
-        
-        // Optionally reset form or show success message
+    
         setProductData({
           name: '',
           price: '',
           image: '',
           address: '',
         });
-
-        // Redirect to the homepage ("/")
-        navigate("/");  // Use navigate to redirect
+        navigate("/");  
       } else {
         console.error("Failed to add product:", response.statusText);
       }
