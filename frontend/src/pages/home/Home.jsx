@@ -54,7 +54,6 @@ const Home = () => {
       const result = await updateProduct(updatedProduct._id, updatedProduct); 
       if (result.success) {
         fetchProducts(); 
-        window.location.reload(true); 
       }
       alert(result.message);
     } catch (error) {

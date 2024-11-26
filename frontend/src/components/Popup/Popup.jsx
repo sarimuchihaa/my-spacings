@@ -5,7 +5,7 @@ export default function Popup({ product, onClose, onSave }) {
     _id: product._id,
     name: product.name,
     price: product.price,
-    image: product.imageUrl,
+    imageUrl: product.imageUrl,
     address: product.address,
   });
 
@@ -21,7 +21,7 @@ export default function Popup({ product, onClose, onSave }) {
       const reader = new FileReader();
       reader.onloadend = () => {
         const base64Image = reader.result;
-        setUpdatedProduct({ ...updatedProduct, image: base64Image });
+        setUpdatedProduct({ ...updatedProduct, imageUrl: base64Image });
       };
       reader.readAsDataURL(file); 
     }

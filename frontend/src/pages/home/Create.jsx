@@ -37,7 +37,6 @@ export default function Create() {
 
       if (response.ok) {
         const result = await response.json();
-        console.log("Product added:", result);
     
         setProductData({
           name: '',
