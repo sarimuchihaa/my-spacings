@@ -34,7 +34,6 @@ app.use("/api/products", productRouter);
 
 
 // PRODUCTION
-// PRODUCTION
 if (process.env.NODE_ENV === "production") {
     const __dirname = path.dirname(new URL(import.meta.url).pathname);  
     const frontendPath = path.join(__dirname, "../frontend/dist");
