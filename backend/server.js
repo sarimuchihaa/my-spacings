@@ -34,15 +34,13 @@ app.use("/api/products", productRouter);
 
 
 // PRODUCTION
-if (process.env.NODE_ENV === "production") {
-    const __dirname = path.dirname(new URL(import.meta.url).pathname); // Resolve __dirname for ES modules
-    const frontendPath = path.join(__dirname, "../frontend/build");  // Adjust to use 'build' if that's your folder
-
-    app.use(express.static(frontendPath));  // Serve static files from the build directory
-    app.get("*", (req, res) => {
-        res.sendFile(path.resolve(frontendPath, "index.html"));  // Serve index.html for any route
-    });
-}
+if (process.env.NODE_ENV === "production") 
+    {
+        app.use(express.static(path.join(__dirname, "/frontend/dist")));
+        app.get("*", (req, res) => {
+            res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
+        });
+    }
 
 
 // DB Connection.
