@@ -5,7 +5,7 @@ export default function Create() {
   const [productData, setProductData] = useState({
     name: '',
     price: '',
-    image: '',
+    imageUrl: '',
     address: '',
   });
 
@@ -17,7 +17,7 @@ export default function Create() {
       const reader = new FileReader(); // Create FileReader to read file.
       reader.onloadend = () => {
         // Set file base64 URL in productData.
-        setProductData({ ...productData, image: reader.result });
+        setProductData({ ...productData, imageUrl: reader.result });
       };
       reader.readAsDataURL(file); // String
     }
@@ -42,7 +42,7 @@ export default function Create() {
         setProductData({
           name: '',
           price: '',
-          image: '',
+          imageUrl: '',
           address: '',
         });
         navigate("/");  

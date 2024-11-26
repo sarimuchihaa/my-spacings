@@ -91,7 +91,7 @@ const Home = () => {
               <div key={product.id} className="overflow-hidden rounded-lg shadow-lg bg-white">
                 <div className="relative aspect-[3/1]">
                   <img
-                    src={product.image}
+                    src={product.imageUrl}
                     alt={product.name}
                     className="object-cover w-full h-full"
                     loading="lazy"

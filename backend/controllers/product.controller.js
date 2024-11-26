@@ -1,16 +1,67 @@
+// Imports
 import { Product } from "../models/product.models.js";
+import { uploadPhoto } from "../middlewares/imageUploadMiddleware.js";
+import { resizeAndUploadImage } from "../middlewares/imageUploadMiddleware.js";
+
+
+// Upload
+export const createImage = (uploadPhoto.single('image'), resizeAndUploadImage, async (req, res) => {
+  try {
+    if (req.imageUrl) {
+      // Save imageUrl to database.
+      const newImage = new Image({ image: req.image });
+      await newImage.save();
+
+      console.log("Image saved to database:", newImage);
+
+      res.json({
+        message: "Image uploaded successfully and saved to the database",
+        image: req.image, // Send URL of uploaded image.
+      });
+    } else {
+      res.status(400).json({
+        message: "No image uploaded",
+      });
+    }
+  } catch (error) {
+    console.error("Error saving image to database:", error);
+    res.status(500).json({
+      message: "Error saving image to database",
+      error: error.message,
+    });
+  }
+});
+
+
+// FETCH
+export const fetchImages = async (req, res) => {
+  try {
+    const images = await Image.find(); // Fetch all images.
+    res.json({
+      message: "Images fetched successfully",
+      images,
+    });
+  } catch (error) {
+    console.error("Error fetching images:", error);
+    res.status(500).json({
+      message: "Error fetching images",
+      error: error.message,
+    });
+  }
+};
+
 
 // Create
 export const createProduct = async (req, res) => {
     try {
       // Destructure data from request body.
-      const { name, price, image, address } = req.body;
+      const { name, price, imageUrl, address } = req.body;
   
       // Create new product.
       const newProduct = new Product({
         name,
         price,
-        image,
+        imageUrl,
         address,
       });
   
@@ -51,6 +102,7 @@ export const getProductById = async (req, res) => {
     }
 };
 
+
 // Delete
 export const deleteProductById = async (req, res) => {
     try {
@@ -71,11 +123,11 @@ export const deleteProductById = async (req, res) => {
 export const updateProductById = async (req, res) => {
     try {
       const { id } = req.params; 
-      const { name, price, image, address } = req.body; 
+      const { name, price, imageUrl, address } = req.body; 
   
       const updatedProduct = await Product.findByIdAndUpdate(
         id,
-        { name, price, image, address }, // Fields to update
+        { name, price, imageUrl, address }, // Fields to update
         { new: true, runValidators: true } // Options: return the updated document and validate before updating
       );
   

@@ -1,6 +1,6 @@
 // IMPORTING
 import { Router } from "express";
-import { createProduct } from "../controllers/product.controller.js";
+import { createImage, createProduct } from "../controllers/product.controller.js";
 import { getProducts } from "../controllers/product.controller.js";
 import { getProductById } from "../controllers/product.controller.js";
 import { deleteProductById } from "../controllers/product.controller.js";
@@ -13,5 +13,6 @@ router.route("/").get(getProducts);
 router.route("/:id").get(getProductById);
 router.route('/:id').delete(deleteProductById);
 router.route('/:id').put(updateProductById);
+router.route('/upload').post(createImage);
 
 export default router;

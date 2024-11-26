@@ -8,7 +8,7 @@ const productSchema = new Schema({
 	price: {
 		type: Number,
 	},
-	image: {
+	imageUrl: {
 		type: String,
 	},
     address: {

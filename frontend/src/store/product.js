@@ -5,7 +5,7 @@ export const useProductStore = create((set) => ({
 
 // Create.
   createProduct: async (newProduct) => {
-    if (!newProduct.name || !newProduct.price || !newProduct.image || !newProduct.address) {
+    if (!newProduct.name || !newProduct.price || !newProduct.imageUrl || !newProduct.address) {
       return { success: false, message: 'Please fill in all fields.' };
     }
 
