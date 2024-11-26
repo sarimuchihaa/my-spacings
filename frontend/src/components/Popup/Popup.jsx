@@ -5,7 +5,7 @@ export default function Popup({ product, onClose, onSave }) {
     _id: product._id,
     name: product.name,
     price: product.price,
-    image: product.image,
+    image: product.imageUrl,
     address: product.address,
   });
 
@@ -61,8 +61,8 @@ export default function Popup({ product, onClose, onSave }) {
             value={updatedProduct.price}
             onChange={(e) => setUpdatedProduct({ ...updatedProduct, price: e.target.value })}
           />
-{/* Image file input */}
-<input
+          {/* Image file input */}
+          <input
             type="file"
             accept="image/*"
             className="w-full p-3 border border-gray-300 rounded-md"
@@ -70,9 +70,9 @@ export default function Popup({ product, onClose, onSave }) {
           />
 
           {/* Display the selected image preview */}
-          {updatedProduct.image && (
+          {updatedProduct.imageUrl && (
             <div className="mt-4">
-              <img src={updatedProduct.image} alt="Product Preview" className="w-32 h-32 object-cover" />
+              <img src={updatedProduct.imageUrl} alt="Product Preview" className="w-32 h-32 object-cover" />
             </div>
           )}
           <div className="flex justify-between">

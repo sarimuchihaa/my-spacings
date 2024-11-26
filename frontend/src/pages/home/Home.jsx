@@ -49,8 +49,6 @@ const Home = () => {
   };
 
   const handleSaveUpdatedProduct = async (updatedProduct) => {
-    console.log('Updated Product:', updatedProduct); 
-    console.log('Updated Product ID:', updatedProduct._id); 
     setIsLoading(true);
     try {
       const result = await updateProduct(updatedProduct._id, updatedProduct); 

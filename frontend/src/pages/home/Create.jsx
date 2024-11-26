@@ -47,7 +47,7 @@ export default function Create() {
         });
         navigate("/");  
       } else {
-        console.error("Failed to add product:", response.statusText);
+        console.error("Failed to add product:");
       }
     } catch (error) {
       console.error("Error sending request:", error);
