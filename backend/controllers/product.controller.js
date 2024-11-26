@@ -125,8 +125,6 @@ export const updateProductById = async (req, res) => {
       const { id } = req.params; 
       const { name, price, imageUrl, address } = req.body; 
 
-      console.log('ID:', id); // Debugging
-      console.log('Request Body:', req.body); // Debugging
   
       const updatedProduct = await Product.findByIdAndUpdate(
         id,
@@ -139,12 +137,8 @@ export const updateProductById = async (req, res) => {
         return res.status(404).json({ message: 'Product not found' });
       }
   
-      // Return updated product in response.
       res.status(200).json({ message: 'Product updated successfully', product: updatedProduct });
-      console.log(response);
     } catch (error) {
-      // Handle errors.
-      console.error(error);
       res.status(500).json({ message: 'Error updating product', error: error.message });
     }
 };
